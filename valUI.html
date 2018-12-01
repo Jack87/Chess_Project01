@@ -40,14 +40,12 @@
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
                     <li class="uk-nav-divider"></li>
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
-                </ul>
-    
+                </ul>    
             </div>
         </div>
     
         <div id="offcanvas-nav" uk-offcanvas="overlay: true">
-            <div class="uk-offcanvas-bar">
-    
+            <div class="uk-offcanvas-bar">  
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-active"><a href="#">Active</a></li>
                     <li class="uk-parent">
@@ -62,8 +60,7 @@
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
                     <li class="uk-nav-divider"></li>
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
-                </ul>
-    
+                </ul>    
             </div>
         </div>
         <button class="uk-button uk-button-secondary uk-align-right" type="button" uk-toggle="target: #offcanvas-flip">Notation</button>
@@ -75,39 +72,51 @@
             </div>
         </div>
         <section class="uk-container uk-align-center">
-
-                     
-                        <div class="uk-child-width-expand@s uk-text-center uk-grid" uk-grid>
-                                <div class=" uk-width-1-2">
-                                    <div class="uk-card uk-background-muted uk-card-small uk-card-body uk-text-large"><i class="far fa-user"></i> White</div>
-                                </div>
-                                <div  class="uk-width-1-2">
-                                    <!--add chess board here-->
-                                    <div class="uk-card uk-background-secondary uk-card-small uk-card-body uk-text-large"><i class="fas fa-user"></i> Black</div>
-                                </div>
-                                <div>
-                                    <div class="uk-card uk-card-primary uk-card-body">
-                                            <div id="chessboard" style="display: inline-block" class=""></div>
-                                    </div>
-                                </div>
+            
+            <div class="uk-child-width-expand@s uk-text-center uk-grid" uk-grid>
+                <div class="uk-width-1-1 join">
+                    <form class="input-group" id="joinForm">
+                        <input type="text" class="uk-input uk-form-width-large" id="nameInput" placeholder="Your name">
+                        <button class="uk-button uk-button-danger" id="joinButton" type="submit"><i class="fas fa-sign-in-alt"></i> Join Game</button>
+                        <!-- <div class="uk-margin uk-grid-small uk-child-width-auto "> -->
+                        <div class="uk-button uk-background-muted" >
+                            <label class="uk-text-large"><input class="uk-radio" type="radio" name="colorChoice" id="colorChoice" value="white" checked> White</label>
+                            <label class="uk-text-large"><input class="uk-radio" type="radio" name="colorChoice" id="colorChoice" value="black"> Black</label>
                         </div>
-        </section>   
-        <section class="uk-container">
-                    <br>
-                    <div class="uk-card uk-card-default uk-width-1-1@m">
-                    <div class="uk-card-header uk-card-default" >
-                        <strong><i class="far fa-comments" ></i> <i uk-icon="icon: users"></i>Trash Talk for the WIN!!</strong>
+                    </form>
+                </div>  
+                <div class="uk-width-1-2">
+                    <div id="whiteSide" class="uk-card uk-background-muted uk-card-small uk-card-body uk-text-large white"><i class="far fa-user"></i> White</div>
+                </div>
+                <div  class="uk-width-1-2">
+                    <div id="blackSide" class="uk-card uk-background-secondary uk-card-small uk-card-body uk-text-large black"><i class="fas fa-user"></i> Black</div>
+                </div>
+                <div class="uk-width-1-1 text-center">
+                    <div id="boardDisplay" class="uk-card uk-card-default uk-card-body">
+                            <div id="chessboard" style="display: inline-block" class=""></div>
                     </div>
-                    <div class="uk-card-body chatLog" id="chatLog"></div> <!-- Conversation goes here -->
-                    <div class="uk-card-footer">
-                        <form class="uk-form" id="chatForm">
-                        <div class="uk-inline uk-width-1-1">
-                            <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: comments"></a>
-                            <input class="uk-input" type="text" placeholder="text">
-                        </div>
-                        </form>
-                    </div> <!-- end of chat input -->
-                    </div> <!-- end of card -->
+                </div>
+                <div class="uk-width-1-1 text-center">
+                        <button class="uk-button uk-button-danger" id="resetButton">Reset Game</button>
+                </div>
+            </div>
+        </section>   
+        <section class="uk-container uk-align-center">
+            <div class="uk-card uk-card-default uk-width-1-1@m">
+            <div class="uk-card-header uk-card-default" >
+                <strong><i class="far fa-comments" ></i> <i uk-icon="icon: users"></i>Trash Talk for the WIN!!</strong>
+            </div>
+            <div class="uk-card-body chatLog" id="chatLog"></div> <!-- Conversation goes here -->
+            <div class="uk-card-footer">
+                <form class="uk-form" id="chatForm">
+                <div class="uk-inline uk-width-1-1">
+                    <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: comments"></a>
+                    <input class="uk-input" type="text" placeholder="text">
+                </div>
+                </form>
+            </div> <!-- end of chat input -->
+            </div> <!-- end of card -->
+            <p class="uk-width-1-1" id="watchers"></p>
         </section> 
         
         <!-- UIkit JS -->

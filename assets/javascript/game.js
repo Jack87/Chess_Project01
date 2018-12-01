@@ -8,6 +8,7 @@ abChess = new AbChess("chessboard", options);
 abChess.setFEN();
 
 
+
 var players = {
     p1 : {
         id:     "",
@@ -222,11 +223,83 @@ $(document).ready(function() {
       });
       
 });
+  //Reset button for debugging and clearing DB data
+  $("#resetButton").click(function(event){
+    event.preventDefault();
+    database.ref().remove()
+    .then(function() {
+      // console.log("Reset succeeded.");
+      location.reload();
+    });
+  });
+ // Player registration
+ $("#joinForm").submit(function(event){
+  // don't refresh page on submit
+  var colorChoice = $("input[name='colorChoice']:checked").val();
+  console.log (colorChoice);
+  event.preventDefault();
+  if (players.p1.name==="") {
+    players.p1.name = toTitleCase($("#nameInput").val().trim());
+    players.p1.side = colorChoice;
+    user.role = "player1";
+    // write name to DOM
+    if (colorChoice == "white") {
+      $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p1.name);
+    }
+    if (colorChoice == "black") {
+      $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p1.name);
+    }
+    // statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
+    // write to db
+    database.ref("/players/1").update({
+      key   : user.key,
+      name  : players.p1.name,
+      wins  : players.p1.wins,
+      losses: players.p1.losses,
+      losses: players.p1.losses,
+      side: colorChoice
+    });
+    gameState = 0;
+    database.ref("/game").update({
+        gameState: gameState
+    });
+    // $(this).hide();
+  } else if (players.p2.name===""){
+    players.p2.name = toTitleCase($("#nameInput").val().trim());
+    // set user global variable to player 2
+    players.p2.side = colorChoice;
+    user.role = "player2";
+    // write name to DOM
+    if (colorChoice == "white") {
+      $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p2.name);
+    }
+    if (colorChoice == "black") {
+      $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p2.name);
+    }
+    $(".player2 h4").html(players.p2.name);
+    // write player name to db
+    database.ref("/players/2").update({
+      key   : user.key,
+      name  : players.p2.name,
+      wins  : players.p2.wins,
+      losses: players.p2.losses,
+      side: colorChoice
+    });
+    statusUpdate("Hey, "+players.p2.name+"! You're player 2. Waiting for "+players.p1.name+" to make a move.");
+    // start game by storing turn in database
+    gameState = 1;
+    database.ref("/game").update({
+        gameState: gameState
+    });
+  }
+    var scrollingElement = (document.scrollingElement || document.body);
+    scrollingElement.scrollTop = scrollingElement.scrollHeight;
+});
 
 //Functions
 // Update status message
 function statusUpdate(msg) {
-    $(".status").html(msg);
+    // $(".status").html(msg);
 };
 //Title Case a string
 function toTitleCase(str)
