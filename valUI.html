@@ -80,8 +80,8 @@
                         <button class="uk-button uk-button-danger" id="joinButton" type="submit"><i class="fas fa-sign-in-alt"></i> Join Game</button>
                         <!-- <div class="uk-margin uk-grid-small uk-child-width-auto "> -->
                         <div class="uk-button uk-background-muted" >
-                            <label class="uk-text-large"><input class="uk-radio" type="radio" name="colorChoice" id="colorChoice" value="white" checked> White</label>
-                            <label class="uk-text-large"><input class="uk-radio" type="radio" name="colorChoice" id="colorChoice" value="black"> Black</label>
+                            <label class="uk-text-large"><input class="uk-radio colorChoice" type="radio" name="colorChoice" id="choiceWhite" value="white" checked> White</label>
+                            <label class="uk-text-large"><input class="uk-radio colorChoice" type="radio" name="colorChoice" id="choiceBlack" value="black"> Black</label>
                         </div>
                     </form>
                 </div>  
@@ -110,8 +110,8 @@
             <div class="uk-card-footer">
                 <form class="uk-form" id="chatForm">
                 <div class="uk-inline uk-width-1-1">
-                    <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: comments"></a>
-                    <input class="uk-input" type="text" placeholder="text">
+                    <a class="uk-form-icon uk-form-icon-flip"  uk-icon="icon: comments" type="submit"></a>
+                    <input class="uk-input" id="chatMessage" type="text" placeholder="GL HF...">
                 </div>
                 </form>
             </div> <!-- end of chat input -->

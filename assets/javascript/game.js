@@ -54,16 +54,39 @@ database.ref("/players").on("value", function(snapshot) {
     if (snapshot.child("1/name").exists()) {
         // save to global var
         players.p1.name = snapshot.child("1/name").val();
+        players.p1.side = snapshot.child("1/side").val();
         // render to DOM
         // $(".player1 h4").html(players.p1.name);
+        if (players.p1.side == "white") {
+          $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p1.name);
+          if (user.role !== "player1"){
+            $("#choiceBlack").attr('checked', true);
+          }
+        }
+        if (players.p1.side == "black") {
+          $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p1.name);
+          if (user.role !== "player1"){
+            $("#choiceBWhite").attr('checked', true);
+          }
+        }
+        // if (user.role !== "player1"){
+          $(".colorChoice").attr('disabled', true);
+        // }
         // save connection keys
         players.p1.key = snapshot.child("1/key").val();
     }
-    if (snapshot.child("2/name").exists() && snapshot.child("1/name").exists()) {
+    if (snapshot.child("2/name").exists()) {
         // save to global var
         players.p2.name = snapshot.child("2/name").val();
+        players.p2.side = snapshot.child("2/side").val();
         // render to DOM
         // $(".player2 h4").html(players.p2.name);
+        if (players.p2.side == "white") {
+          $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p2.name);
+        }
+        if (players.p2.side == "black") {
+          $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p2.name);
+        }
         // save connection keys
         players.p2.key = snapshot.child("2/key").val();
         // hide input but maintain height
@@ -143,7 +166,7 @@ gStateVal.on("value", function(snapState) {
 // Chatbox live
 database.ref("/chatBox").orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot){
     var output = "<div class='msg'><span class='speaker'>";
-    output += snapshot.val().name;
+    output += "<strong>" + snapshot.val().name + "</strong>";
     output += ":</span> <span class='msgContent'>";
     output += snapshot.val().message;
     output += "</span></div>";
