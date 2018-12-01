@@ -3,24 +3,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/cssReset.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
+    <!-- AbChess Lib CSS -->
+    <link rel="stylesheet" href="./assets/lib/AbChess-0.3.0/AbChess-0.3.0.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
 
-    <!-- UIkit JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
     <title>Colab Chess</title>
 </head>
 <body>
         <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
-                <h1 class="uk-card-title uk-text-center">CoLab Chess</h1>
-                <p class="uk-text-center">Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <h1 class="uk-card-title uk-text-center">CoLab Chess</h1>
+            <p class="uk-text-center">Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
         <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">Navigate</button>
-
         <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
             <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-    
                 <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
                     <li class="uk-active"><a href="#">Active</a></li>
                     <li class="uk-parent">
@@ -62,42 +67,36 @@
             </div>
         </div>
         <button class="uk-button uk-button-default uk-align-right" type="button" uk-toggle="target: #offcanvas-flip">Notation</button>
-    
         <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
             <div class="uk-offcanvas-bar">
-    
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
-    
                 <h3>How to Play!</h3>
-    
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.</p>
-    
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>    
             </div>
         </div>
-        <div class="uk-container uk-align-center">
+        <section class="uk-container uk-align-center">
 
-                     <!--add chess board here-->
-                        <div class="uk-child-width-expand@s uk-text-center" uk-grid>
-                                <div>
-                                    <div class="uk-card uk-background-primary uk-card-small uk-card-body">Opponent</div>
+                     
+                        <div class="uk-child-width-expand@s uk-text-center uk-grid" uk-grid>
+                                <div class=" uk-width-1-2">
+                                    <div class="uk-card uk-background-muted uk-card-small uk-card-body">White</div>
+                                </div>
+                                <div  class="uk-width-1-2">
+                                    <!--add chess board here-->
+                                    <div class="uk-card uk-background-secondary uk-card-small uk-card-body">Black</div>
                                 </div>
                                 <div>
-                                    <div class="uk-card uk-card-default uk-card-body">add chess board here</div>
-                                </div>
-                                <div>
-                                    <div class="uk-card uk-background-secondary uk-card-small uk-card-body">You</div>
+                                    <div class="uk-card uk-card-primary uk-card-body">
+                                            <div id="chessboard" style="display: inline-block" class=""></div>
+                                    </div>
                                 </div>
                         </div>
-        </div>   
-        <div class="uk-container">
-                     
-                
+        </section>   
+        <section class="uk-container">
                     <br>
                     <div class="uk-card uk-card-default uk-width-1-1@m">
-                    <div class="uk-card-header uk-card-default">
-                        <strong><i class="far fa-comments" uk-icon="icon: users"></i> Trash Talk for the WIN!!</strong>
+                    <div class="uk-card-header uk-card-default" >
+                        <strong><i class="far fa-comments" ></i> <i uk-icon="icon: users"></i>Trash Talk for the WIN!!</strong>
                     </div>
                     <div class="uk-card-body chatLog" id="chatLog"></div> <!-- Conversation goes here -->
                     <div class="uk-card-footer">
@@ -109,9 +108,19 @@
                         </form>
                     </div> <!-- end of chat input -->
                     </div> <!-- end of card -->
-                
-                
-           
-        </div> 
+        </section> 
+        
+        <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
+        <!-- jQuery JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <!-- Firebase JS -->
+        <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+        <!-- Game JS -->
+        <script type="text/javascript" src="assets/lib/AbChess-0.3.0/AbChess-0.3.0.js"></script>
+        <script type="text/javascript" src="assets/javascript/game.js"></script>
+
 </body>
 </html>
