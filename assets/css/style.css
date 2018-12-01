@@ -9,10 +9,45 @@ body{
 }
 
 .chatLog{
+    font-family: 'Roboto', sans-serif;
     height: 10rem;
     overflow-y: auto;
     vertical-align: bottom; 
 }
 #boardContainer {
     justify-content: center
+}
+.uk-container.uk-heading-line.uk-text-center{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 900;
+}
+.uk-container {
+    background-color: #EE964B;
+    position: relative;
+}
+
+.uk-offcanvas{
+    background-color: rgba(161, 156, 137, 0.575)
+}
+.uk-offcanvas-bar{
+    background-color: rgba(35, 61, 77, 0.705);
+}
+.far.fa-comments{
+    font-family: 'Roboto', sans-serif;
+}
+
+.uk-heading-line.uk-text-center{
+    font-family: 'Roboto', sans-serif;}
+.uk-card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    /* background-color: #fff; */
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
 }
