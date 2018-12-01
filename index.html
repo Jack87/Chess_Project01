@@ -1,99 +1,135 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- CSS Imports -->
-    <link rel="stylesheet" href="./assets/css/cssReset.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-    <link rel="stylesheet" href="./assets/lib/AbChess-0.3.0/AbChess-0.3.0.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Chess MultiPlayer!</title>
-</head>
-<body class="bg-light">
-
-        <div class = "uk-container">
-          <div class="uk-tile uk-tile-muted uk-padding-small uk-margin-small-top">
-            <h1 class="display-3"><img class="logo iconRPS" src="" alt="">CoLab Chess!</h1>
-            <p class="lead">Play Chess!</p>
-            <h3>1...2...Shoot!</h3>
-          </div>
-          <section class="uk-grid uk-padding-small uk-flex uk-flex-column uk-flex-center uk-flex uk-flex-column" id="display">
-            <div class="uk-grid justify-content-center">
-              <div class="uk-width-1-1 join">
-                <form class="input-group" id="joinForm">
-                  <input type="text" class="form-control" id="nameInput" placeholder="Your name">
-                  <span class="input-group-btn">
-                    <button class="btn btn-secondary" id="joinButton" type="submit"><i class="fas fa-sign-in-alt"></i> Join Game</button>
-                  </span>
-                </form>
-              </div> 
-            </div>
-            <br>
-            <section id="boardContainer" class="uk-width-1-1 uk-padding-small">
-                <div id="chessboard" style="display: inline-block" class=""></div>
-            </section>        
-            
-
-            <div class="uk-width-1-1 text-center">
-                <button class="uk-button uk-button-danger" id="clearButton">Reset Game</button>
-            </div>
-
-            <section class="chatbox uk-width-1-1">
-                <div class="uk-grid">
-                  <div class="uk-width-1-1">
-                    <br>
-                    <div class="uk-card uk-card-default">
-                      <div class="uk-card-header uk-card-default">
-                        <strong><i class="far fa-comments"></i> Trash Talk for the WIN!!</strong>
-                      </div>
-                      <div class="uk-card-body chatLog" id="chatLog"></div> <!-- Conversation goes here -->
-                      <div class="uk-card-footer">
-                        <form class="uk-form" id="chatForm">
-                          <div class="uk-inline uk-width-1-1">
-                              <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: comment"></a>
-                              <input class="uk-input" type="text" placeholder="text">
-                          </div>
-                        </form>
-                      </div> <!-- end of chat input -->
-                    </div> <!-- end of card -->
-                  </div>
-                </div>
-              </section> <!-- end of chatbox -->
-              <p class="col-12 text-center m-1" id="watchers"></p>
-          </section>     
-          <div class="spacer uk-margin-small-bottom"></div>
-          <footer uk-sticky="bottom: true" class="footer-copyright text-center bg-secondary border-top-2">
-              <div class="wrapper">
-                  &copy; Not Copyright 2018 
-              </div>
-          </footer>   
-        </div>
-
-        <!-- <div class="spacer"></div>
-        <footer uk-sticky="bottom: true" class="footer-copyright text-center bg-secondary border-top-2">
-            <div class="wrapper">
-                &copy; Not Copyright 2018 
-            </div>
-        </footer> -->
     
-    <!-- jQuery -->
-    <!-- UIkit JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <!-- Game JavaScript -->
-    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-    <script type="text/javascript" src="assets/lib/AbChess-0.3.0/AbChess-0.3.0.js"></script>
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
-  </body>
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/cssReset.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
+    <!-- AbChess Lib CSS -->
+    <link rel="stylesheet" href="./assets/lib/AbChess-0.3.0/AbChess-0.3.0.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <title>Colab Chess</title>
+</head>
+<body>
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
+            <h1 class="uk-article-title uk-text-center">CoLab Chess</h1>
+            <p class="uk-text-center  uk-text-large">Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <button class="uk-button uk-button-secondary uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">Navigate</button>
+        <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+            <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+                <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                    <li class="uk-active"><a href="#">Active</a></li>
+                    <li class="uk-parent">
+                        <a href="#">Parent</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="#">Sub item</a></li>
+                            <li><a href="#">Sub item</a></li>
+                        </ul>
+                    </li>
+                    <li class="uk-nav-header">Header</li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                    <li class="uk-nav-divider"></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+                </ul>    
+            </div>
+        </div>
+    
+        <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+            <div class="uk-offcanvas-bar">  
+                <ul class="uk-nav uk-nav-default">
+                    <li class="uk-active"><a href="#">Active</a></li>
+                    <li class="uk-parent">
+                        <a href="#">Parent</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="#">Sub item</a></li>
+                            <li><a href="#">Sub item</a></li>
+                        </ul>
+                    </li>
+                    <li class="uk-nav-header">Header</li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                    <li class="uk-nav-divider"></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+                </ul>    
+            </div>
+        </div>
+        <button class="uk-button uk-button-secondary uk-align-right" type="button" uk-toggle="target: #offcanvas-flip">Notation</button>
+        <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <h3>How to Play!</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>    
+            </div>
+        </div>
+        <section class="uk-container uk-align-center">
+            
+            <div class="uk-child-width-expand@s uk-text-center uk-grid" uk-grid>
+                <div class="uk-width-1-1 join">
+                    <form class="input-group" id="joinForm">
+                        <input type="text" class="uk-input uk-form-width-large" id="nameInput" placeholder="Your name">
+                        <button class="uk-button uk-button-danger" id="joinButton" type="submit"><i class="fas fa-sign-in-alt"></i> Join Game</button>
+                        <!-- <div class="uk-margin uk-grid-small uk-child-width-auto "> -->
+                        <div class="uk-button uk-background-muted" >
+                            <label class="uk-text-large"><input class="uk-radio colorChoice" type="radio" name="colorChoice" id="choiceWhite" value="white" checked> White</label>
+                            <label class="uk-text-large"><input class="uk-radio colorChoice" type="radio" name="colorChoice" id="choiceBlack" value="black"> Black</label>
+                        </div>
+                    </form>
+                </div>  
+                <div class="uk-width-1-2">
+                    <div id="whiteSide" class="uk-card uk-background-muted uk-card-small uk-card-body uk-text-large white"><i class="far fa-user"></i> White</div>
+                </div>
+                <div  class="uk-width-1-2">
+                    <div id="blackSide" class="uk-card uk-background-secondary uk-card-small uk-card-body uk-text-large black"><i class="fas fa-user"></i> Black</div>
+                </div>
+                <div class="uk-width-1-1 text-center">
+                    <div id="boardDisplay" class="uk-card uk-card-default uk-card-body">
+                            <div id="chessboard" style="display: inline-block" class=""></div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 text-center">
+                        <button class="uk-button uk-button-danger" id="resetButton">Reset Game</button>
+                </div>
+            </div>
+        </section>   
+        <section class="uk-container uk-align-center">
+            <div class="uk-card uk-card-default uk-width-1-1@m">
+            <div class="uk-card-header uk-card-default" >
+                <strong><i class="far fa-comments" ></i> <i uk-icon="icon: users"></i>Trash Talk for the WIN!!</strong>
+            </div>
+            <div class="uk-card-body chatLog" id="chatLog"></div> <!-- Conversation goes here -->
+            <div class="uk-card-footer">
+                <form class="uk-form" id="chatForm">
+                <div class="uk-inline uk-width-1-1">
+                    <a class="uk-form-icon uk-form-icon-flip"  uk-icon="icon: comments" type="submit"></a>
+                    <input class="uk-input" id="chatMessage" type="text" placeholder="GL HF...">
+                </div>
+                </form>
+            </div> <!-- end of chat input -->
+            </div> <!-- end of card -->
+            <p class="uk-width-1-1" id="watchers"></p>
+        </section> 
+        
+        <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
+        <!-- jQuery JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <!-- Firebase JS -->
+        <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+        <!-- Game JS -->
+        <script type="text/javascript" src="assets/lib/AbChess-0.3.0/AbChess-0.3.0.js"></script>
+        <script type="text/javascript" src="assets/javascript/game.js"></script>
+
+</body>
 </html>
