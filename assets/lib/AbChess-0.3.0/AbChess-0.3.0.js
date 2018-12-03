@@ -29,6 +29,7 @@ window.AbChess = window.AbChess || function (abId, abOptions) {
      * Chess constants.
      */
     var chess = {
+        lastMove: [],
         bishop: "b",
         bishopVectors: [[-1, -1], [-1, 1], [1, -1], [1, 1]],
         black: "b",
@@ -2048,6 +2049,7 @@ window.AbChess = window.AbChess || function (abId, abOptions) {
             if (board.options.markLastMove && board.currentMoveIndex > -1) {
                 start = board.game.moves[board.currentMoveIndex].start;
                 end = board.game.moves[board.currentMoveIndex].arrival;
+                chess.lastMove = [start, end];
                 startSquare = board.getSquare(start);
                 endSquare = board.getSquare(end);
                 startSquare.isLastMove = true;
@@ -2078,6 +2080,9 @@ window.AbChess = window.AbChess || function (abId, abOptions) {
      * Return the API.
      */
     return {
+        getLastMove: function () {
+            return chess.lastMove;
+        },
         flip: function () {
             while (abBoard.container.hasChildNodes()) {
                 abBoard.container.removeChild(abBoard.container.lastChild);
