@@ -8,22 +8,31 @@ var options = {
 // renderBoard()
 var players = {
     p1 : {
-        id:     "",
-        name:   "",
-        wins:   0,
+        id    : "",
+        name  : "",
+        wins  : 0,
         losses: 0,
-        side: "",
-        board: "",
-        key: ""
+        side  : "",
+        board : "",
+        key   : ""
     },
     p2 : {
-        id:     "",
-        name:   "",
-        wins:   0,
+        id    : "",
+        name  : "",
+        wins  : 0,
         losses: 0,
-        side: "",
-        board: "",
-        key: ""
+        side  : "",
+        board : "",
+        key   : ""
+    },
+    pS :{
+      id    : "",
+      name  : "",
+      wins  : 0,
+      losses: 0,
+      side  : "",
+      board : "",
+      key   : ""
     },
     activeSpectators: [],
     totalConnections: 0
@@ -34,8 +43,9 @@ var user = {
     side     : "",
     lastMove : ""
 };
-var lastMove1
+var lastMove1 = "";
 var gameState = 0;
+var turn = "";
 
 // Initialize Firebase
 var config = {
@@ -56,7 +66,6 @@ database.ref("/players").on("value", function(snapshot) {
         players.p1.name = snapshot.child("1/name").val();
         players.p1.side = snapshot.child("1/side").val();
         // render to DOM
-        // $(".player1 h4").html(players.p1.name);
         if (players.p1.side == "white") {
           $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p1.name);
           if (user.role !== "player1"){
@@ -80,7 +89,6 @@ database.ref("/players").on("value", function(snapshot) {
         players.p2.name = snapshot.child("2/name").val();
         players.p2.side = snapshot.child("2/side").val();
         // render to DOM
-        // $(".player2 h4").html(players.p2.name);
         if (players.p2.side == "white") {
           $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p2.name);
         }
@@ -359,7 +367,8 @@ function afterMove() {
   statusUpdate(pgnText);
   database.ref("/lastMove").update({
     side  : user.side,
-    move  : user.lastMove
+    move  : user.lastMove,
+    pgnLog: pgnText
   });
   // gameState = 0;
   // database.ref("/game").update({
