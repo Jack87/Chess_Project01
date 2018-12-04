@@ -1,41 +1,51 @@
 var abChess = {};
 var options = {
     animated: true,
-    animationSpeed: 3,
-    width: 800
+    animationSpeed: 6,
+    width: 700,
+    reversed: false
 };
-abChess = new AbChess("chessboard", options);
-abChess.setFEN();
-
-
-
+// renderBoard()
 var players = {
     p1 : {
-        id:     "",
-        name:   "",
-        wins:   0,
+        id    : "",
+        name  : "",
+        wins  : 0,
         losses: 0,
-        side: "",
-        board: "",
-        key: ""
+        side  : "",
+        board : "",
+        key   : ""
     },
     p2 : {
-        id:     "",
-        name:   "",
-        wins:   0,
+        id    : "",
+        name  : "",
+        wins  : 0,
         losses: 0,
-        side: "",
-        board: "",
-        key: ""
+        side  : "",
+        board : "",
+        key   : ""
+    },
+    pS :{
+      id    : "",
+      name  : "",
+      wins  : 0,
+      losses: 0,
+      side  : "",
+      board : "",
+      key   : ""
     },
     activeSpectators: [],
     totalConnections: 0
 };
 var user = {
-    role: "",
-    key:  ""
-};  
+    role     : "",
+    key      :  "",
+    side     : "",
+    lastMove : ""
+};
+var lastMove1 = "";
 var gameState = 0;
+var turn = "";
 
 // Initialize Firebase
 var config = {
@@ -56,7 +66,6 @@ database.ref("/players").on("value", function(snapshot) {
         players.p1.name = snapshot.child("1/name").val();
         players.p1.side = snapshot.child("1/side").val();
         // render to DOM
-        // $(".player1 h4").html(players.p1.name);
         if (players.p1.side == "white") {
           $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p1.name);
           if (user.role !== "player1"){
@@ -80,7 +89,6 @@ database.ref("/players").on("value", function(snapshot) {
         players.p2.name = snapshot.child("2/name").val();
         players.p2.side = snapshot.child("2/side").val();
         // render to DOM
-        // $(".player2 h4").html(players.p2.name);
         if (players.p2.side == "white") {
           $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p2.name);
         }
@@ -218,7 +226,22 @@ connectionsRef.on("child_removed", function(removedKey) {
     }
 });
 
+// Handling opponet's move
+var lastMoveRef = database.ref("/lastMove");
+lastMoveRef.on("value", function(snap) {
+  if (snap.val()) {
+    if (snap.child("side").val() != user.side){
+      var startSquare = snap.child("move/0").val();
+      var endSquare = snap.child("move/1").val();
+      abChess.play(startSquare, endSquare);
+      console.log("Opponent moved from " + startSquare + " to " + endSquare + ".")
+    }
+  } 
+});
+
 $(document).ready(function() {
+
+  // abChess.onMovePlayed(afterMove);
     //Reset button for debugging and clearing DB data
     $("#resetButton").click(function(event){
         event.preventDefault();
@@ -255,6 +278,11 @@ $(document).ready(function() {
       location.reload();
     });
   });
+  $("#moveButton").click(function(event){
+      event.preventDefault();
+      abChess.play("d2", "d6");
+
+  });
  // Player registration
  $("#joinForm").submit(function(event){
   // don't refresh page on submit
@@ -265,12 +293,14 @@ $(document).ready(function() {
     players.p1.name = toTitleCase($("#nameInput").val().trim());
     players.p1.side = colorChoice;
     user.role = "player1";
+    user.side = colorChoice;
     // write name to DOM
     if (colorChoice == "white") {
       $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p1.name);
     }
     if (colorChoice == "black") {
       $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p1.name);
+      options.reversed = true;
     }
     // statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
     // write to db
@@ -292,12 +322,14 @@ $(document).ready(function() {
     // set user global variable to player 2
     players.p2.side = colorChoice;
     user.role = "player2";
+    user.side = colorChoice;
     // write name to DOM
     if (colorChoice == "white") {
       $("#whiteSide").html('<i class="far fa-user"></i> ' + players.p2.name);
     }
     if (colorChoice == "black") {
       $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p2.name);
+      options.reversed = true;
     }
     $(".player2 h4").html(players.p2.name);
     // write player name to db
@@ -315,14 +347,45 @@ $(document).ready(function() {
         gameState: gameState
     });
   }
-    var scrollingElement = (document.scrollingElement || document.body);
-    scrollingElement.scrollTop = scrollingElement.scrollHeight;
+  statusUpdate("")
+  renderBoard();
+      // var scrollingElement = (document.scrollingElement || document.body);
+    // scrollingElement.scrollTop = scrollingElement.scrollHeight;
 });
 
 //Functions
+// Render Board
+function renderBoard() {
+  abChess = new AbChess("chessboard", options);
+  abChess.setFEN();
+  abChess.onMovePlayed(afterMove);
+}
+//After a move is playe
+function afterMove() {  
+  user.lastMove = abChess.getLastMove()
+  var pgnText= abChess.getPGN()
+  statusUpdate(pgnText);
+  database.ref("/lastMove").update({
+    side  : user.side,
+    move  : user.lastMove,
+    pgnLog: pgnText
+  });
+  // gameState = 0;
+  // database.ref("/game").update({
+  //     gameState: gameState
+  // });
+}
+// function getLastMove() {
+//   var startSquare = abChess.board.game.moves[board.currentMoveIndex].start;
+//   console.log(startSquare);
+//   var endSquare = abChess.board.game.moves[board.currentMoveIndex].arrival;
+//   console.log(endSquare);
+//   lastMove1 = startSquare + ", " + endSquare;
+//   console.log(lastMove1)
+// }
 // Update status message
 function statusUpdate(msg) {
-    // $(".status").html(msg);
+  $(".status").html(msg);
 };
 //Title Case a string
 function toTitleCase(str)
