@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/cssReset.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
+    <!-- AbChess Lib CSS -->
+    <link rel="stylesheet" href="./assets/lib/AbChess-0.3.0/AbChess-0.3.0.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <title>Colab Chess</title>
+</head>
+<body>
+        <div class="commands">
+                <textarea id="pgn-textarea" placeholder="Paste a PGN here and click Import."></textarea>
+                <button id="pgn-button" class="commands__button">Import</button>
+                <button id="first-button" class="commands__button">|<</button>
+                <button id="previous-button" class="commands__button"><</button>
+                <button id="next-button" class="commands__button">></button>
+                <button id="last-button" class="commands__button">>|</button>
+              </div>
+              <div id="chessboard" style="display: inline-block" class=""></div>
+              <div id="moves-div"></div>
+
+        
+        
+        <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
+        <!-- jQuery JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <!-- Firebase JS -->
+        <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+        <!-- Game JS -->
+        <script type="text/javascript" src="assets/lib/AbChess-0.3.0/AbChess-0.3.0.js"></script>
+        <script type="text/javascript" src="assets/javascript/test.js"></script>
+
+</body>
+</html>

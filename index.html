@@ -23,8 +23,8 @@
             <h1 class="uk-article-title uk-text-center">CoLab Chess</h1>
             <p class="uk-text-center  uk-text-large">Come here sit down, relax and challenge your friends!</p>
         </div>
-        <button class="uk-button uk-button-secondary uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">Navigate</button>
-        <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+        
+        <div id="navPrimary" uk-offcanvas="overlay: true">
             <div class="uk-offcanvas-bar uk-flex uk-flex-column">
                 <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
                     <li class="uk-active"><a href="#">Active</a></li>
@@ -63,12 +63,13 @@
                 </ul>    
             </div>
         </div>
-        <button class="uk-button uk-button-secondary uk-align-right" type="button" uk-toggle="target: #offcanvas-flip">Notation</button>
-        <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+        <div id="moveLog" uk-offcanvas="flip: true; overlay: false; mode: slide; bg-close: false">
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
-                <h3>How to Play!</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>    
+                <h3>Moves Log</h3>
+                <p>Current game move history below:</p>    
+                <div id="moves-div"></div>
+                
             </div>
         </div>
         <section class="uk-container uk-align-center">
@@ -91,7 +92,11 @@
                 <div  class="uk-width-1-2">
                     <div id="blackSide" class="uk-card uk-background-secondary uk-card-small uk-card-body uk-text-large black"><i class="fas fa-user"></i> Black</div>
                 </div>
-                <div class="uk-width-1-1 text-center">
+                <div  class="uk-width-1-1 uk-margin-small-top">
+                        <button class="uk-button uk-button-secondary uk-align-left uk-margin-remove" type="button" uk-toggle="target: #navPrimary">Navigate</button>
+                        <button class="uk-button uk-button-secondary uk-align-right uk-margin-remove" type="button" uk-toggle="target: #moveLog">Notation</button>
+                </div>
+                <div class="uk-width-1-1 text-center uk-margin-small-top">
                     <div id="boardDisplay" class="uk-card uk-card-default uk-card-body">
                         <h2 id="statusElement" class="status">Join to Play</h2>   
                         <div id="chessboard" style="display: inline-block" class=""></div>
