@@ -2,10 +2,12 @@ var abChess = {};
 var options = {
     animated: true,
     animationSpeed: 6,
-    width: 700,
+    width: 600,
     reversed: false
 };
-// renderBoard()
+var moves = [];
+var movesDiv = document.getElementById("moves-div");
+
 var players = {
     p1 : {
         id    : "",
@@ -231,13 +233,20 @@ var lastMoveRef = database.ref("/lastMove");
 lastMoveRef.on("value", function(snap) {
   if (snap.val()) {
     if (snap.child("side").val() != user.side){
-      var startSquare = snap.child("move/0").val();
-      var endSquare = snap.child("move/1").val();
-      abChess.play(startSquare, endSquare);
-      console.log("Opponent moved from " + startSquare + " to " + endSquare + ".")
+      handleOppMove(snap);
     }
   } 
 });
+
+function handleOppMove(snap) {
+  var startSquare = snap.child("move/0").val();
+  var endSquare = snap.child("move/1").val();
+  abChess.play(startSquare, endSquare);
+  console.log("Opponent moved from " + startSquare + " to " + endSquare + ".")
+  // Enable clicking of pieces for current turn player
+  $('.square__piece').unbind('click');
+  $('.square__piece').unbind('mousedown');
+}
 
 $(document).ready(function() {
 
@@ -280,7 +289,21 @@ $(document).ready(function() {
   });
   $("#moveButton").click(function(event){
       event.preventDefault();
-      abChess.play("d2", "d6");
+      var currentPNG = ""
+      var currentBoard = database.ref("/lastMove");
+      console.log(currentBoard);
+      currentBoard.on("value", function(snap) {
+        currentPNG = snap.child("pgnLog").val()
+        if (snap.child("pgnLog").exists()) {
+          var startSquare = snap.child("move/0").val();
+          var endSquare = snap.child("move/1").val();
+          abChess.play(startSquare, endSquare);
+          currentPNG = snap.child("pgnLog").val()
+          console.log(currentPNG);
+          // abChess.setPGN(currentPNG)
+        }
+    });
+      // abChess.play("d2", "d6");
 
   });
  // Player registration
@@ -301,6 +324,7 @@ $(document).ready(function() {
     if (colorChoice == "black") {
       $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p1.name);
       options.reversed = true;
+      // abChess.setPGN();
     }
     // statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
     // write to db
@@ -349,6 +373,14 @@ $(document).ready(function() {
   }
   statusUpdate("")
   renderBoard();
+  //   var currentBoard = database.ref("/lastMove");
+  //   console.log(currentBoard);
+  //   currentBoard.on("value", function(snap) {
+  //     if (snap.child("pgnLog").exists()) {
+  //       var startSquare = snap.child("move/0").val();
+  //       var endSquare = snap.child("move/1").val();
+  //       abChess.play(startSquare, endSquare);
+  // }
       // var scrollingElement = (document.scrollingElement || document.body);
     // scrollingElement.scrollTop = scrollingElement.scrollHeight;
 });
@@ -356,13 +388,16 @@ $(document).ready(function() {
 //Functions
 // Render Board
 function renderBoard() {
+
   abChess = new AbChess("chessboard", options);
   abChess.setFEN();
+  // abChess.setPGN(currentPNG);
   abChess.onMovePlayed(afterMove);
 }
 //After a move is playe
 function afterMove() {  
   user.lastMove = abChess.getLastMove()
+
   var pgnText= abChess.getPGN()
   statusUpdate(pgnText);
   database.ref("/lastMove").update({
@@ -370,10 +405,43 @@ function afterMove() {
     move  : user.lastMove,
     pgnLog: pgnText
   });
+
+  clearSpans();
+  moves = abChess.getMovesPGN();
+  moves.forEach(addMoveSpan);
+  // lastIndex = moves.length;
+  // navigate(lastIndex);
+
+  $('.square__piece').click(false);
+  $('.square__piece').mousedown(false);
+  
+
+  
   // gameState = 0;
   // database.ref("/game").update({
   //     gameState: gameState
   // });
+}
+function addMoveSpan(move, i) {
+  var numberSpan = {};
+  var span = document.createElement("span");
+  span.className = "move-span";
+  span.innerText = move;
+  span.addEventListener("click", function () {
+      navigate(i + 1);
+  });
+  if (i % 2 === 0) {
+      numberSpan = document.createElement("span");
+      numberSpan.className = "move-number-span";
+      numberSpan.innerText = i / 2 + 1;
+      movesDiv.appendChild(numberSpan);
+  }
+  movesDiv.appendChild(span);
+}
+function clearSpans() {
+  while (movesDiv.hasChildNodes()) {
+      movesDiv.removeChild(movesDiv.lastElementChild);
+  }
 }
 // function getLastMove() {
 //   var startSquare = abChess.board.game.moves[board.currentMoveIndex].start;

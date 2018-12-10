@@ -14,16 +14,12 @@ body{
     overflow-y: auto;
     vertical-align: bottom; 
 }
-#boardContainer {
-    justify-content: center
-}
 .uk-container.uk-heading-line.uk-text-center{
     font-family: 'Open Sans', sans-serif;
     font-weight: 900;
 }
 .uk-container {
     background-color: #EE964B;
-    position: relative;
 }
 
 .uk-offcanvas{
@@ -44,4 +40,51 @@ body{
 }
 .black {
     color: darkgrey;
+}
+
+#moves-div {
+    display: inline-block;
+    vertical-align: top;
+    max-height: 100;
+    width: 200px;
+    overflow: auto;
+    margin: 0 4px;
+    font-size: 0.8em;
+    /* user-select: none; Standard syntax */
+    padding: 5px;
+}
+
+.move-number-span {
+    display: inline-block;
+    vertical-align: top;
+    width: 12%;
+    padding: 2px;
+    border-bottom: 1px gainsboro solid;
+    border-right: 1px gainsboro solid;
+    border-top: 1px gainsboro solid;
+    border-left: 1px gainsboro solid;
+    color: #EE964B;
+    text-align: center;
+}
+
+.move-span {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    width: 40%;
+    padding: 2px;
+    border-bottom: 1px gainsboro solid;
+    border-right: 1px gainsboro solid;
+    border-top: 1px gainsboro solid;
+    text-align: center;
+    color: #EE964B;
+}
+
+#move-span_selected {
+    color: green;
+    background-color: palegreen;
+}
+
+.move-span:hover {
+    background-color: gainsboro;
 }
