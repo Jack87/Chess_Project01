@@ -36,40 +36,29 @@
                         </ul>
                     </li>
                     <li class="uk-nav-header">Header</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                    <li id="test"><button id="dCPuzzle-modalBtn" class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #dailyChessPuzzle-modal">Daily Puzzle</button> <a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
                     <li class="uk-nav-divider"></li>
                     <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
                 </ul>    
             </div>
         </div>
-    
-        <div id="offcanvas-nav" uk-offcanvas="overlay: true">
-            <div class="uk-offcanvas-bar">  
-                <ul class="uk-nav uk-nav-default">
-                    <li class="uk-active"><a href="#">Active</a></li>
-                    <li class="uk-parent">
-                        <a href="#">Parent</a>
-                        <ul class="uk-nav-sub">
-                            <li><a href="#">Sub item</a></li>
-                            <li><a href="#">Sub item</a></li>
-                        </ul>
-                    </li>
-                    <li class="uk-nav-header">Header</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
-                    <li class="uk-nav-divider"></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
-                </ul>    
+        <!-- This is the modal with the outside close button -->
+        <div id="dailyChessPuzzle-modal" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body ">
+                <button class="uk-modal-close-outside" type="button" uk-close></button>
+                <h2 class="uk-modal-title">Daily Chess Puzzle</h2>
+                <div class="dailyChessPuzzle">
+                </div>
             </div>
         </div>
+        
         <div id="moveLog" uk-offcanvas="flip: true; overlay: false; mode: slide; bg-close: false">
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
                 <h3>Moves Log</h3>
                 <p>Current game move history below:</p>    
                 <div id="moves-div"></div>
-                
             </div>
         </div>
         <section class="uk-container uk-align-center">
