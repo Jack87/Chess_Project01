@@ -249,8 +249,13 @@ function handleOppMove(snap) {
 }
 
 $(document).ready(function() {
-
+  displayDailyPuzzle()
   // abChess.onMovePlayed(afterMove);
+  // $("#displayPuzzle").click(function(event){
+  //   event.preventDefault();
+  //     displayDailyPuzzle();
+  //     console.log("tst")
+  // });
     //Reset button for debugging and clearing DB data
     $("#resetButton").click(function(event){
         event.preventDefault();
@@ -262,6 +267,7 @@ $(document).ready(function() {
       });
       $("#chatForm").submit(function(event){
         event.preventDefault();
+        validateForm("chatForm", "chatMessage", "Message")
         var message = $("#chatMessage").val().trim();
         // clear input
         $("#chatMessage").val("");
@@ -309,9 +315,15 @@ $(document).ready(function() {
  // Player registration
  $("#joinForm").submit(function(event){
   // don't refresh page on submit
+  event.preventDefault();
+  // Validate input
+  if (validateForm('joinForm','nameInput','Name') == false) {
+    console.log(this)
+    return
+  }
+  
   var colorChoice = $("input[name='colorChoice']:checked").val();
   console.log (colorChoice);
-  event.preventDefault();
   if (players.p1.name==="") {
     players.p1.name = toTitleCase($("#nameInput").val().trim());
     players.p1.side = colorChoice;
@@ -326,7 +338,7 @@ $(document).ready(function() {
       options.reversed = true;
       // abChess.setPGN();
     }
-    // statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
+    statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
     // write to db
     database.ref("/players/1").update({
       key   : user.key,
@@ -340,7 +352,7 @@ $(document).ready(function() {
     database.ref("/game").update({
         gameState: gameState
     });
-    // $(this).hide();
+    
   } else if (players.p2.name===""){
     players.p2.name = toTitleCase($("#nameInput").val().trim());
     // set user global variable to player 2
@@ -364,6 +376,7 @@ $(document).ready(function() {
       losses: players.p2.losses,
       side: colorChoice
     });
+    
     statusUpdate("Hey, "+players.p2.name+"! You're player 2. Waiting for "+players.p1.name+" to make a move.");
     // start game by storing turn in database
     gameState = 1;
@@ -371,7 +384,8 @@ $(document).ready(function() {
         gameState: gameState
     });
   }
-  statusUpdate("")
+  $(this).hide();
+  // statusUpdate("")
   renderBoard();
   //   var currentBoard = database.ref("/lastMove");
   //   console.log(currentBoard);
@@ -386,6 +400,57 @@ $(document).ready(function() {
 });
 
 //Functions
+
+// Display daily puzzle
+function displayDailyPuzzle() {
+  var baseURL = "https://api.chess.com/pub/puzzle"
+  $.ajax({
+    url: baseURL,
+    method: "GET"
+  }).then(function(response) {
+      console.log(response);
+          // Saving the image property
+          var imageUrl = response.image;
+          var title = response.title;
+          var fen = "'textFEN'"
+          var pgn = "'textPGN'"
+          // Store this into varable first then we can prepend it.  
+          var dPuzzle = $("<div>").addClass("card")
+          dPuzzle.html('<div class="uk-card uk-card-default uk-card-small uk-card-hover uk-card-body"> \
+                  <h3 class="uk-card-title"><strong>'+ title + '</strong></h3> \
+                  <img class="dailyPuzzleImg" alt="Daily Puzzle image" src="' + imageUrl + '"></img><br> \
+                  <a href="' + response.url + '" class="" target="_blank"><i class="fas fa-external-link-alt"></i> Solve the puzzle at chess.com</a> \
+                  <a class="" onclick="ClipBoard(' + fen + ')"><i class="far fa-copy"></i> Copy FEN    </a> \
+                  <textarea style="display:none;" id="textFEN">' + response.fen + '</textarea> \
+                  <a class="" onclick="ClipBoard(' + pgn + ')"><i class="fas fa-copy"></i> Copy PGN    </a> \
+                  <textarea style="display:none;" id="textPGN">' + response.pgn + '</textarea> \
+              </div> \
+          </div> ')
+          $(".dailyChessPuzzle").prepend(dPuzzle);
+  });
+}
+// Copy to clipboard
+function ClipBoard(elmID) {
+  // return
+  var copied = document.getElementById(elmID).value
+  console.log(copied);
+  var dummy = $('<input>').val(copied).appendTo('.dailyChessPuzzle').select()
+  document.execCommand('copy');
+  dummy.css("display", "none");
+  dummy.remove()
+};
+
+// Form validation
+function validateForm(xfrom, xinput, xItem) {
+  var x = document.forms[xfrom][xinput].value;
+  if (x.trim() == "") {
+    UIkit.modal.alert(xItem + " must be filled in.");
+    document.getElementById(xinput).value = "";
+    // Not sure why but its not really setting focus
+    document.getElementById(xinput).focus();
+    return false;
+  }
+}
 // Render Board
 function renderBoard() {
 
