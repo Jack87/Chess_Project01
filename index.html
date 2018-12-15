@@ -52,6 +52,13 @@
                 </div>
             </div>
         </div>
+
+        <div id="learnMeetUp-modal" uk-modal>
+            <div id="lMU-mod" class="uk-modal-dialog uk-modal-body uk-margin-small">
+                <button class="uk-modal-close-outside" type="button" uk-close></button>
+                <iframe width="325" height="670" src="http://meetu.ps/3jDmcr" frameborder="5"></iframe>
+            </div>
+        </div>
         
         <div id="moveLog" uk-offcanvas="flip: true; overlay: false; mode: slide; bg-close: false">
             <div class="uk-offcanvas-bar">
@@ -82,8 +89,19 @@
                     <div id="blackSide" class="uk-card uk-background-secondary uk-card-small uk-card-body uk-text-large black"><i class="fas fa-user"></i> Black</div>
                 </div>
                 <div  class="uk-width-1-1 uk-margin-small-top">
-                        <button class="uk-button uk-button-secondary uk-align-left uk-margin-remove" type="button" uk-toggle="target: #navPrimary">Navigate</button>
                         <button class="uk-button uk-button-secondary uk-align-right uk-margin-remove" type="button" uk-toggle="target: #moveLog">Notation</button>
+                        <!-- <button class="uk-button uk-button-secondary uk-align-left uk-margin-remove" type="button" uk-toggle="target: #navPrimary">Navigate</button> -->
+
+                        <button class="uk-button uk-button-secondary uk-margin-remove uk-align-left" type="button">Navigate</button>
+                        <div class="uk-dropdown-nav-custom" uk-dropdown="animation: uk-animation-slide-top-small; duration: 500; overlay: true">
+                            <ul class="uk-nav uk-dropdown-nav uk-align-left">
+                                <li class="uk-nav-header">Functions</li>
+                                <li><button id="dCPuzzle-modalBtn" class="uk-button uk-button-secondary uk-margin-small" type="button" uk-toggle="target: #dailyChessPuzzle-modal">Daily Puzzle</button></li>
+                                <li><button id="LTPMeetUp-modalBtn" class="uk-button uk-button-secondary uk-margin-small" type="button" uk-toggle="target: #learnMeetUp-modal">Learn to Play MeetUp</button></li>
+                                <li class="uk-nav-divider"></li>
+                                <li><a href="#">Item</a></li>
+                            </ul>
+                        </div>
                 </div>
                 <div class="uk-width-1-1 text-center uk-margin-small-top">
                     <div id="boardDisplay" class="uk-card uk-card-default uk-card-body">
@@ -93,7 +111,8 @@
                 </div>
                 <div class="uk-width-1-1 text-center uk-margin-bottom">
                     <button class="uk-button uk-button-danger" id="resetButton">Reset Game</button>
-                    <button class="uk-button uk-button-danger" id="moveButton">Move</button>
+                    <!-- <button class="uk-button uk-button-danger" id="moveButton">Move</button> -->
+                    <button class="uk-button uk-button-danger" id="flipButton">Flip</button>
                 </div>
             </div>
         </section>   

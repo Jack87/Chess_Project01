@@ -12,8 +12,8 @@ var players = {
     p1 : {
         id    : "",
         name  : "",
-        wins  : 0,
-        losses: 0,
+        wins  :  0,
+        losses:  0,
         side  : "",
         board : "",
         key   : ""
@@ -21,8 +21,8 @@ var players = {
     p2 : {
         id    : "",
         name  : "",
-        wins  : 0,
-        losses: 0,
+        wins  :  0,
+        losses:  0,
         side  : "",
         board : "",
         key   : ""
@@ -30,8 +30,8 @@ var players = {
     pS :{
       id    : "",
       name  : "",
-      wins  : 0,
-      losses: 0,
+      wins  :  0,
+      losses:  0,
       side  : "",
       board : "",
       key   : ""
@@ -41,9 +41,10 @@ var players = {
 };
 var user = {
     role     : "",
-    key      :  "",
+    key      : "",
     side     : "",
-    lastMove : ""
+    lastMove : "",
+    opponet  : ""
 };
 var lastMove1 = "";
 var gameState = 0;
@@ -97,6 +98,17 @@ database.ref("/players").on("value", function(snapshot) {
         if (players.p2.side == "black") {
           $("#blackSide").html('<i class="fas fa-user"></i> ' + players.p2.name);
         }
+        if (user.side == "white") {
+          statusUpdate("It's your turn");
+        } else {
+          
+          if (user.role == "player1" ) {
+            user.opponet = players.p2.name;
+          } else if(user.role == "player2") {
+            user.opponet = players.p1.name;
+          }
+          statusUpdate("Waiting for " + opponet + " to make a move...");
+        }
         // save connection keys
         players.p2.key = snapshot.child("2/key").val();
         // hide input but maintain height
@@ -105,10 +117,12 @@ database.ref("/players").on("value", function(snapshot) {
 });
 
 /* // Switch statment determins case to use depending on game state from DB
-// gameState = 0, new game with no players
-// gameState = 1, player one's turn
-// gameState = 2, player two's turn
-// gameState = 3, results
+// gameState = 0, new game with no players or waiting for players
+// gameState = 1, first move
+// gameState = 2, black move
+// gameState = 3, white move
+// gameState = 4, check active
+// gameState = 5, checkmate game over
 database.ref("/game").on("value", function(gameStateStatus) {
     if(gameStateStatus.child("gameState").exists()) {
       switch (gameStateStatus.val().gameState) {
@@ -293,25 +307,30 @@ $(document).ready(function() {
       location.reload();
     });
   });
-  $("#moveButton").click(function(event){
-      event.preventDefault();
-      var currentPNG = ""
-      var currentBoard = database.ref("/lastMove");
-      console.log(currentBoard);
-      currentBoard.on("value", function(snap) {
-        currentPNG = snap.child("pgnLog").val()
-        if (snap.child("pgnLog").exists()) {
-          var startSquare = snap.child("move/0").val();
-          var endSquare = snap.child("move/1").val();
-          abChess.play(startSquare, endSquare);
-          currentPNG = snap.child("pgnLog").val()
-          console.log(currentPNG);
-          // abChess.setPGN(currentPNG)
-        }
-    });
-      // abChess.play("d2", "d6");
+  // $("#moveButton").click(function(event){
+  //     event.preventDefault();
+  //     var currentPNG = ""
+  //     var currentBoard = database.ref("/lastMove");
+  //     console.log(currentBoard);
+  //     currentBoard.on("value", function(snap) {
+  //       currentPNG = snap.child("pgnLog").val()
+  //       if (snap.child("pgnLog").exists()) {
+  //         var startSquare = snap.child("move/0").val();
+  //         var endSquare = snap.child("move/1").val();
+  //         abChess.play(startSquare, endSquare);
+  //         currentPNG = snap.child("pgnLog").val()
+  //         console.log(currentPNG);
+  //         // abChess.setPGN(currentPNG)
+  //       }
+  //   });
+  //     // abChess.play("d2", "d6");
 
-  });
+  // });
+
+  $("#flipButton").click(function(event){
+    event.preventDefault();
+  abChess.flip();
+});
  // Player registration
  $("#joinForm").submit(function(event){
   // don't refresh page on submit
@@ -338,7 +357,7 @@ $(document).ready(function() {
       options.reversed = true;
       // abChess.setPGN();
     }
-    statusUpdate("Hi, "+players.p1.name+"! You're player 1. Waiting for another player to join.");
+    statusUpdate("Hi, "+players.p1.name+"! Waiting for another player to join.");
     // write to db
     database.ref("/players/1").update({
       key   : user.key,
@@ -377,7 +396,7 @@ $(document).ready(function() {
       side: colorChoice
     });
     
-    statusUpdate("Hey, "+players.p2.name+"! You're player 2. Waiting for "+players.p1.name+" to make a move.");
+    // statusUpdate("Hey, " + players.p2.name + "! Waiting for " + players.p1.name + " to make a move.");
     // start game by storing turn in database
     gameState = 1;
     database.ref("/game").update({
