@@ -28,6 +28,17 @@ body{
 .uk-offcanvas-bar{
     background-color: rgba(35, 61, 77, 0.705);
 }
+.uk-dropdown-nav-custom {
+    background-color: rgba(35, 61, 77, 0.705);
+    color: lightgrey
+}
+.uk-dropdown-nav .uk-nav-header{
+    color: lightgrey
+}
+#lMU-mod {
+    width: 285px;
+    height: 445px;
+}
 .far.fa-comments{
     font-family: 'Roboto', sans-serif;
 }
@@ -39,7 +50,7 @@ body{
     border-radius: .25rem;
 }
 .black {
-    color: darkgrey;
+    color: lightgrey;
 }
 
 #moves-div {
